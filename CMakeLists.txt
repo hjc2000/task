@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 include(${cpp_lib_build_scripts_path}/cmake-module/setup.cmake)
-include(target_import_libfreertos)
+include(target_import_freertos_gcc_cm3)
 include(target_import_base)
 
 set(ProjectName task)
@@ -11,5 +11,5 @@ set(CMAKE_C_STANDARD 99)
 
 add_library(${ProjectName} STATIC)
 target_import_src(${ProjectName})
-target_import_libfreertos(${ProjectName} PUBLIC)
+target_import_freertos_gcc_cm3(${ProjectName} PUBLIC)
 target_import_base(${ProjectName} PUBLIC)
