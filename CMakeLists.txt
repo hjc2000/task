@@ -13,3 +13,5 @@ add_library(${ProjectName} STATIC)
 target_import_src(${ProjectName})
 target_import_freertos(${ProjectName} PUBLIC)
 target_import_base(${ProjectName} PUBLIC)
+
+set(CMAKE_INSTALL_PREFIX ${cpp_lib_build_scripts_path}/${platform}/.libs/${ProjectName}/)
