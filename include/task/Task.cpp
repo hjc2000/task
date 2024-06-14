@@ -1,13 +1,29 @@
 #include"Task.h"
+#include<stdexcept>
 
 std::shared_ptr<task::Task> task::Task::Create(std::function<void()> func, uint16_t stack_depth)
 {
-	std::shared_ptr<task::Task> task{ new task::Task{} };
+	if (func == nullptr)
+	{
+		throw std::invalid_argument { "func 不能为 nullptr" };
+	}
+
+	std::shared_ptr<task::Task> task { new task::Task { } };
 	task->_func = func;
 	auto f = [](void *param)
 	{
-		task::Task *task = (task::Task *)param;
-		task->_func();
+		try
+		{
+			task::Task *task = (task::Task *)param;
+			task->_func();
+		}
+		catch (...)
+		{
+
+		}
+
+		// 任务要退出必须删除自身，否则会内存泄漏
+		vTaskDelete(nullptr);
 	};
 
 	xTaskCreate(
