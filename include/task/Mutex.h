@@ -1,7 +1,7 @@
 #pragma once
-#include<FreeRTOS.h>
-#include<semphr.h>
-#include<stdexcept>
+#include <FreeRTOS.h>
+#include <semphr.h>
+#include <stdexcept>
 
 namespace task
 {
@@ -31,13 +31,13 @@ namespace task
 		Mutex &_mutex;
 
 	public:
-		MutexLockGuard(Mutex &m) :
-			_mutex(m)
+		MutexLockGuard(Mutex &m)
+			: _mutex(m)
 		{
 			bool lock_result = _mutex.Lock();
 			if (!lock_result)
 			{
-				throw std::runtime_error{ "互斥锁加锁失败" };
+				throw std::runtime_error{"互斥锁加锁失败"};
 			}
 		}
 

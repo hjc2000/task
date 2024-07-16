@@ -1,13 +1,11 @@
 #pragma once
-#include<FreeRTOS.h>
-#include<functional>
-#include<task.h>
+#include <FreeRTOS.h>
+#include <functional>
+#include <task.h>
 
 namespace task
 {
-	/// <summary>
-	///		用于进出临界区
-	/// </summary>
+	/// @brief 用于进出临界区
 	class Critical
 	{
 	private:
@@ -36,10 +34,8 @@ namespace task
 			taskEXIT_CRITICAL_FROM_ISR(_isr_enter_ret);
 		}
 
-		/// <summary>
-		///		在非中断中执行临界区任务
-		/// </summary>
-		/// <param name="f"></param>
+		/// @brief 在非中断中执行临界区任务
+		/// @param f
 		static void Run(std::function<void()> f)
 		{
 			Enter();
