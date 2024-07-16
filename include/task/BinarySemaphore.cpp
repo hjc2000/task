@@ -1,4 +1,4 @@
-#include"BinarySemaphore.h"
+#include "BinarySemaphore.h"
 
 using namespace task;
 
@@ -7,7 +7,7 @@ BinarySemaphore::BinarySemaphore()
 	handle = xSemaphoreCreateBinary();
 	if (handle == nullptr)
 	{
-		throw std::runtime_error{ "创建信号量失败" };
+		throw std::runtime_error{"创建信号量失败"};
 	}
 }
 
@@ -31,7 +31,7 @@ void BinarySemaphore::Acquire()
 	bool ret = xSemaphoreTake(handle, portMAX_DELAY);
 	if (!ret)
 	{
-		throw std::runtime_error{ "获取信号量失败" };
+		throw std::runtime_error{"获取信号量失败"};
 	}
 }
 
