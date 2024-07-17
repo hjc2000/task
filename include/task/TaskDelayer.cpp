@@ -1,7 +1,7 @@
 #include "TaskDelayer.h"
 #include <FreeRTOS.h>
 #include <task.h>
-#include <task/dependencies.h>
+#include <task/di.h>
 
 void task::TaskDelayer::Delay(std::chrono::microseconds microseconds)
 {
