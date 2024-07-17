@@ -68,3 +68,11 @@ void task::TaskDelayer::Delay(std::chrono::seconds seconds)
 {
 	Delay(std::chrono::milliseconds{seconds});
 }
+
+namespace bsp
+{
+	bsp::IDelayer &DI_Delayer()
+	{
+		return task::TaskDelayer::Instance();
+	}
+}
