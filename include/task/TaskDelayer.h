@@ -6,6 +6,9 @@ namespace task
 	class TaskDelayer
 		: public bsp::IDelayer
 	{
+	private:
+		TaskDelayer() = default;
+
 	public:
 		static TaskDelayer &Instance()
 		{
