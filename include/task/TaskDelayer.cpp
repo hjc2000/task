@@ -16,7 +16,7 @@ void task::TaskDelayer::Delay(std::chrono::microseconds microseconds)
 
 	// 剩余的小于 1000 部分的微秒
 	microseconds -= ms;
-	task::DI_SysTick().Delay(microseconds);
+	DI_SysTick().Delay(microseconds);
 }
 
 void task::TaskDelayer::Delay(std::chrono::milliseconds milliseconds)
@@ -24,7 +24,7 @@ void task::TaskDelayer::Delay(std::chrono::milliseconds milliseconds)
 	// 如果调度器不在运行，则使用 SysTickClock::Delay
 	if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING)
 	{
-		task::DI_SysTick().Delay(milliseconds);
+		DI_SysTick().Delay(milliseconds);
 		return;
 	}
 
@@ -61,19 +61,11 @@ void task::TaskDelayer::Delay(std::chrono::milliseconds milliseconds)
 
 	if (mod > 0)
 	{
-		task::DI_SysTick().Delay(std::chrono::milliseconds{mod / configTICK_RATE_HZ});
+		DI_SysTick().Delay(std::chrono::milliseconds{mod / configTICK_RATE_HZ});
 	}
 }
 
 void task::TaskDelayer::Delay(std::chrono::seconds seconds)
 {
 	Delay(std::chrono::milliseconds{seconds});
-}
-
-namespace bsp
-{
-	bsp::IDelayer &DI_Delayer()
-	{
-		return task::TaskDelayer::Instance();
-	}
 }
