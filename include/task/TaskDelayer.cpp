@@ -1,6 +1,7 @@
 #include "TaskDelayer.h"
 #include <base/Initializer.h>
-#include <bsp-interface/di.h>
+#include <bsp-interface/di/delayer.h>
+#include <bsp-interface/di/systick.h>
 #include <FreeRTOS.h>
 #include <task.h>
 
