@@ -1,16 +1,8 @@
 #include "TaskDelayer.h"
-#include <base/Initializer.h>
 #include <bsp-interface/di/delayer.h>
 #include <bsp-interface/di/systick.h>
 #include <FreeRTOS.h>
 #include <task.h>
-
-/// @brief 注册初始化函数
-static base::Initializer _task_delayer_initializer{
-    []()
-    {
-        task::TaskDelayer::Instance();
-    }};
 
 void task::TaskDelayer::Delay(std::chrono::microseconds microseconds)
 {
