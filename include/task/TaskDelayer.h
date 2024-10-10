@@ -1,4 +1,5 @@
 #pragma once
+#include <base/define.h>
 #include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/interrupt.h>
 #include <bsp-interface/IDelayer.h>
@@ -11,7 +12,7 @@ namespace task
         TaskDelayer() = default;
 
     public:
-        static TaskDelayer &Instance()
+        static_function TaskDelayer &Instance()
         {
             class Getter : public base::SingletonGetter<TaskDelayer>
             {
