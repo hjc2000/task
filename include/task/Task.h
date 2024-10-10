@@ -3,17 +3,20 @@
 #include <bsp-interface/task/ITask.h>
 #include <FreeRTOS.h>
 #include <functional>
+#include <map>
 #include <memory>
 #include <stdint.h>
 #include <task.h>
 
 namespace task
 {
-    class Task : public bsp::ITask
+    class Task :
+        public bsp::ITask
     {
     private:
         std::function<void()> _func;
         TaskHandle_t _handle;
+        inline static_field std::map<task::Task *, std::shared_ptr<task::Task>> _task_map{};
 
     public:
         /// @brief 创建一个任务以执行 func。
