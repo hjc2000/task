@@ -26,5 +26,11 @@ namespace bsp
         {
             return task::FreeTask::Create(func, stack_size);
         }
+
+        /// @brief 启动调度。本函数会持续阻塞。
+        void StartScheduler() override
+        {
+            vTaskStartScheduler();
+        }
     };
 } // namespace bsp
