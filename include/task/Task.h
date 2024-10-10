@@ -1,5 +1,6 @@
 #pragma once
 #include <base/define.h>
+#include <bsp-interface/task/ITask.h>
 #include <FreeRTOS.h>
 #include <functional>
 #include <memory>
@@ -8,7 +9,7 @@
 
 namespace task
 {
-    class Task
+    class Task : public bsp::ITask
     {
     private:
         std::function<void()> _func;
