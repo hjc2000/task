@@ -10,10 +10,14 @@ namespace bsp
     class TaskManager :
         public bsp::ITaskManager
     {
+    private:
+        TaskManager() = default;
+
     public:
         static_function TaskManager &Instance()
         {
-            class Getter : public base::SingletonGetter<TaskManager>
+            class Getter :
+                public base::SingletonGetter<TaskManager>
             {
             public:
                 std::unique_ptr<TaskManager> Create() override
