@@ -2,40 +2,18 @@
 #include <base/define.h>
 #include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/interrupt.h>
-#include <bsp-interface/IDelayer.h>
+#include <bsp-interface/timer/IDelayer.h>
 
 namespace task
 {
-    class TaskDelayer : public bsp::IDelayer
+    class TaskDelayer :
+        public bsp::IDelayer
     {
     private:
         TaskDelayer() = default;
 
     public:
-        static_function TaskDelayer &Instance()
-        {
-            class Getter : public base::SingletonGetter<TaskDelayer>
-            {
-            public:
-                std::unique_ptr<TaskDelayer> Create() override
-                {
-                    return std::unique_ptr<TaskDelayer>{new TaskDelayer{}};
-                }
-
-                void Lock() override
-                {
-                    DI_InterruptSwitch().DisableGlobalInterrupt();
-                }
-
-                void Unlock() override
-                {
-                    DI_InterruptSwitch().EnableGlobalInterrupt();
-                }
-            };
-
-            Getter g;
-            return g.Instance();
-        }
+        static_function TaskDelayer &Instance();
 
         void Delay(std::chrono::microseconds microseconds);
         void Delay(std::chrono::milliseconds milliseconds);

@@ -4,6 +4,31 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+task::TaskDelayer &task::TaskDelayer::Instance()
+{
+    class Getter : public base::SingletonGetter<TaskDelayer>
+    {
+    public:
+        std::unique_ptr<TaskDelayer> Create() override
+        {
+            return std::unique_ptr<TaskDelayer>{new TaskDelayer{}};
+        }
+
+        void Lock() override
+        {
+            DI_InterruptSwitch().DisableGlobalInterrupt();
+        }
+
+        void Unlock() override
+        {
+            DI_InterruptSwitch().EnableGlobalInterrupt();
+        }
+    };
+
+    Getter g;
+    return g.Instance();
+}
+
 void task::TaskDelayer::Delay(std::chrono::microseconds microseconds)
 {
     // 大于 1000 的微秒转换为毫秒，利用 Delay(std::chrono::milliseconds milliseconds) 重载。
