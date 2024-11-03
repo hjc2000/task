@@ -2,6 +2,7 @@
 #include <base/define.h>
 #include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/interrupt.h>
+#include <bsp-interface/di/systick.h>
 #include <bsp-interface/task/ITaskManager.h>
 #include <FreeTask.h>
 
@@ -30,6 +31,15 @@ namespace bsp
         /// @brief 启动调度。本函数会持续阻塞。
         void StartScheduler() override
         {
+            DI_SysTick().SetElapsedHandler(
+                []()
+                {
+                    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+                    {
+                        xPortSysTickHandler();
+                    }
+                });
+
             vTaskStartScheduler();
         }
     };
