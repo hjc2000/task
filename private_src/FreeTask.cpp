@@ -1,8 +1,7 @@
 #include "FreeTask.h"
 #include <stdexcept>
 
-std::shared_ptr<task::FreeTask>
-task::FreeTask::Create(std::function<void()> func, uint16_t stack_depth)
+std::shared_ptr<task::FreeTask> task::FreeTask::Create(std::function<void()> func, uint16_t stack_depth)
 {
     if (func == nullptr)
     {

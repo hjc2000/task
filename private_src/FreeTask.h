@@ -29,7 +29,6 @@ namespace task
         ///
         /// @return 返回创建的任务对象。可以不用接收返回值，这并不会导致 FreeTask 对象在本函数调用
         /// 结束后析构，因为本函数会将任务存放到内部 map 中，防止本函数返回后智能指针的终结器执行。
-        static_function std::shared_ptr<task::FreeTask>
-        Create(std::function<void()> func, uint16_t stack_depth);
+        static_function std::shared_ptr<task::FreeTask> Create(std::function<void()> func, uint16_t stack_depth);
     };
 } // namespace task
