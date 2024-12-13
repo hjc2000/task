@@ -6,18 +6,18 @@
 
 namespace task
 {
-    class Mutex :
-        public bsp::IMutex
-    {
-    private:
-        SemaphoreHandle_t _freertos_mutex;
+	class Mutex :
+		public bsp::IMutex
+	{
+	private:
+		SemaphoreHandle_t _freertos_mutex;
 
-    public:
-        Mutex();
-        ~Mutex();
+	public:
+		Mutex();
+		~Mutex();
 
-        void Lock() override;
-        void Unlock() override;
-    };
+		void Lock() override;
+		void Unlock() override;
+	};
 
 } // namespace task

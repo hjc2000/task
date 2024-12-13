@@ -3,5 +3,5 @@
 
 std::shared_ptr<bsp::IBinarySemaphore> DICreate_BinarySemaphore()
 {
-    return std::shared_ptr<bsp::IBinarySemaphore>{new task::BinarySemaphore{}};
+	return std::shared_ptr<bsp::IBinarySemaphore>{new task::BinarySemaphore{}};
 }

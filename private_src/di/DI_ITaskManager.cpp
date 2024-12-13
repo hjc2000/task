@@ -3,5 +3,5 @@
 
 bsp::ITaskManager &DI_TaskManager()
 {
-    return bsp::TaskManager::Instance();
+	return bsp::TaskManager::Instance();
 }
