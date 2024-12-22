@@ -1,4 +1,5 @@
 #include "FreeTask.h"
+#include <bsp-interface/di/console.h>
 #include <stdexcept>
 
 std::shared_ptr<task::FreeTask> task::FreeTask::Create(std::function<void()> func, uint16_t stack_depth)
@@ -27,8 +28,14 @@ std::shared_ptr<task::FreeTask> task::FreeTask::Create(std::function<void()> fun
 		{
 			task->_func();
 		}
+		catch (std::exception const &e)
+		{
+			DI_Console().WriteError("任务函数发生了异常：");
+			DI_Console().WriteError(e.what());
+		}
 		catch (...)
 		{
+			DI_Console().WriteError("任务函数发生了未知的异常。");
 		}
 
 		// 任务结束后需要将 task 从 map 中移除，保证指向的 task::Task 对象能够析构。
