@@ -1,7 +1,16 @@
-#include <bsp-interface/di/task.h>
+#include <base/task/IMutex.h>
 #include <Mutex.h>
 
-std::shared_ptr<bsp::IMutex> DICreate_Mutex()
+namespace base
 {
-	return std::shared_ptr<bsp::IMutex>{new task::Mutex{}};
-}
+	namespace di
+	{
+		/// @brief 创建一个互斥量。
+		/// @return
+		std::shared_ptr<base::IMutex> CreateMutex()
+		{
+			return std::shared_ptr<base::IMutex>{new task::Mutex{}};
+		}
+	} // namespace di
+
+} // namespace base

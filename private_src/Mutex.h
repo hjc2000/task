@@ -1,5 +1,5 @@
 #pragma once
-#include <bsp-interface/task/IMutex.h>
+#include <base/task/IMutex.h>
 #include <FreeRTOS.h>
 #include <semphr.h>
 #include <stdexcept>
@@ -7,7 +7,7 @@
 namespace task
 {
 	class Mutex :
-		public bsp::IMutex
+		public base::IMutex
 	{
 	private:
 		SemaphoreHandle_t _freertos_mutex;
