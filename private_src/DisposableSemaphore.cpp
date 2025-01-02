@@ -26,6 +26,11 @@ void task::DisposableSemaphore::Dispose()
 
 void task::DisposableSemaphore::Release(int32_t count)
 {
+	if (count <= 0)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "count 不能 <=0."};
+	}
+
 	base::LockGuard g{*_lock};
 	for (int64_t i = 0; i < count; i++)
 	{
