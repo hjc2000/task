@@ -54,11 +54,12 @@ void task::DisposableSemaphore::Acquire()
 
 	{
 		base::LockGuard g{*_lock};
-		_acquirer_count--;
 		if (_disposed)
 		{
 			throw std::runtime_error{CODE_POS_STR + "信号量已经释放，无法获取。"};
 		}
+
+		_acquirer_count--;
 	}
 }
 
@@ -85,11 +86,12 @@ bool task::DisposableSemaphore::TryAcquire(base::Seconds const &timeout)
 
 	{
 		base::LockGuard g{*_lock};
-		_acquirer_count--;
 		if (_disposed)
 		{
 			throw std::runtime_error{CODE_POS_STR + "信号量已经释放，无法获取。"};
 		}
+
+		_acquirer_count--;
 	}
 
 	return result;
