@@ -83,7 +83,7 @@ bool task::DisposableSemaphore::TryAcquire(base::Seconds const &timeout)
 	int64_t tick_count = static_cast<int64_t>(timeout / freertos_tick_interval);
 	if (tick_count >= static_cast<int64_t>(portMAX_DELAY))
 	{
-		throw std::invalid_argument{CODE_POS_STR + "等待时间过程。"};
+		throw std::invalid_argument{CODE_POS_STR + "等待时间过长。"};
 	}
 
 	bool result = xSemaphoreTake(_semaphore, tick_count);
