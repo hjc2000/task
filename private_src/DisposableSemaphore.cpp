@@ -14,8 +14,6 @@ task::DisposableSemaphore::~DisposableSemaphore()
 
 void task::DisposableSemaphore::Dispose()
 {
-	base::LockGuard g{*_lock};
-
 	if (_disposed)
 	{
 		return;
@@ -23,10 +21,7 @@ void task::DisposableSemaphore::Dispose()
 
 	_disposed = true;
 
-	for (int64_t i = 0; i < _acquirer_count; i++)
-	{
-		xSemaphoreGive(_semaphore);
-	}
+	ReleaseAllAcquire();
 }
 
 void task::DisposableSemaphore::Release(int32_t count)
