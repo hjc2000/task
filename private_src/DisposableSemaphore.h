@@ -25,6 +25,9 @@ namespace task
 		/// @param count 要释放的数量。
 		virtual void Release(int32_t count) override;
 
+		/// @brief 释放所有等待者。
+		virtual void ReleaseAllAcquire() override;
+
 		/// @brief 获取信号量。无限等待，永不超时。
 		virtual void Acquire() override;
 

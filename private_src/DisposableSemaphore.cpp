@@ -38,6 +38,15 @@ void task::DisposableSemaphore::Release(int32_t count)
 	}
 }
 
+void task::DisposableSemaphore::ReleaseAllAcquire()
+{
+	base::LockGuard g{*_lock};
+	for (int64_t i = 0; i < _acquirer_count; i++)
+	{
+		xSemaphoreGive(_semaphore);
+	}
+}
+
 void task::DisposableSemaphore::Acquire()
 {
 	{
