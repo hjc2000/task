@@ -55,3 +55,11 @@ std::shared_ptr<task::FreeTask> task::FreeTask::Create(std::function<void()> fun
 	// 本类对象内的字段借由拷贝构造函数拷贝给接收返回值的对象
 	return task;
 }
+
+extern "C"
+{
+	void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
+	{
+		DI_Console().WriteError(std::string{"任务栈发生溢出。，任务名："} + pcTaskName);
+	}
+}
