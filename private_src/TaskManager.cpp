@@ -13,12 +13,12 @@ bsp::TaskManager &bsp::TaskManager::Instance()
 
 		void Lock() override
 		{
-			DI_DisableGlobalInterrupt();
+			vTaskSuspendAll();
 		}
 
 		void Unlock() override
 		{
-			DI_EnableGlobalInterrupt();
+			xTaskResumeAll();
 		}
 	};
 
