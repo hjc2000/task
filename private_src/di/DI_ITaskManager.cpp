@@ -34,6 +34,7 @@ void DI_StartScheduler()
 }
 
 /// @brief 暂停所有调度。
+/// @warning 实现本函数时禁止使用动态内存分配，因为堆也需要本函数。
 void DI_SuspendAllTask()
 {
 	vTaskSuspendAll();
@@ -41,6 +42,7 @@ void DI_SuspendAllTask()
 
 /// @brief 恢复所有调度。
 /// @note 如果调度器没有启动，本函数不会启动调度器。
+/// @warning 实现本函数时禁止使用动态内存分配，因为堆也需要本函数。
 void DI_ResumeAllTask()
 {
 	xTaskResumeAll();
