@@ -3,19 +3,28 @@
 #include <base/unit/Seconds.h>
 #include <bsp-interface/di/delayer.h>
 #include <bsp-interface/di/systick.h>
-#include <bsp-interface/di/task.h>
 #include <FreeRTOS.h>
 #include <task.h>
 
 task::TaskDelayer &task::TaskDelayer::Instance()
 {
 	class Getter :
-		public bsp::TaskSingletonGetter<TaskDelayer>
+		public base::SingletonGetter<TaskDelayer>
 	{
 	public:
 		std::unique_ptr<TaskDelayer> Create() override
 		{
 			return std::unique_ptr<TaskDelayer>{new TaskDelayer{}};
+		}
+
+		void Lock() override
+		{
+			DI_DisableGlobalInterrupt();
+		}
+
+		void Unlock() override
+		{
+			DI_EnableGlobalInterrupt();
 		}
 	};
 
