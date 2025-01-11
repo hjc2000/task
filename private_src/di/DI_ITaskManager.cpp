@@ -6,12 +6,10 @@
 #include <FreeTask.h>
 
 /// @brief 创建一个任务
-///
-/// @param func 任务函数
-///
 /// @param stack_size 任务栈大小。单位：字。
 /// @note 对于 32 位宽的 CPU ，一个字是 32 位，即 4 个字节。
-std::shared_ptr<bsp::ITask> DI_CreateTask(std::function<void()> func, uint32_t stack_size)
+/// @param func 任务函数
+std::shared_ptr<bsp::ITask> DI_CreateTask(uint32_t stack_size, std::function<void()> func)
 {
 	return task::FreeTask::Create(func, stack_size);
 }
