@@ -48,3 +48,13 @@ void bsp::TaskManager::StartScheduler()
 
 	vTaskStartScheduler();
 }
+
+void bsp::TaskManager::SuspendAllTask()
+{
+	vTaskSuspendAll();
+}
+
+void bsp::TaskManager::ResumeAllTask()
+{
+	xTaskResumeAll();
+}
