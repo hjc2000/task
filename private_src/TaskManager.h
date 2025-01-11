@@ -27,5 +27,12 @@ namespace bsp
 
 		/// @brief 启动调度。本函数会持续阻塞。
 		void StartScheduler() override;
+
+		/// @brief 暂停所有调度。
+		virtual void SuspendAllTask() override;
+
+		/// @brief 恢复所有调度。
+		/// @note 如果调度器没有启动，本函数不会启动调度器。
+		virtual void ResumeAllTask() override;
 	};
 } // namespace bsp
