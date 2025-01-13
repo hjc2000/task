@@ -1,5 +1,4 @@
 #include <base/define.h>
-#include <base/di/SingletonGetter.h>
 #include <bsp-interface/di/interrupt.h>
 #include <bsp-interface/di/systick.h>
 #include <bsp-interface/di/task.h>
