@@ -5,9 +5,12 @@ namespace base
 {
 	namespace di
 	{
-		/// @brief 创建一个互斥量。
-		/// @return
-		std::shared_ptr<base::IMutex> CreateMutex()
+		/**
+		 * @brief 创建一个互斥量。
+		 *
+		 * @return std::shared_ptr<base::IMutex>
+		 */
+		std::shared_ptr<base::IMutex> CreateIMutex()
 		{
 			return std::shared_ptr<base::IMutex>{new task::Mutex{}};
 		}
