@@ -6,7 +6,7 @@
  *
  * @return std::shared_ptr<base::IMutex>
  */
-std::shared_ptr<base::IMutex> base::di::CreateIMutex()
+std::shared_ptr<base::IMutex> base::CreateIMutex()
 {
 	return std::shared_ptr<base::IMutex>{new task::Mutex{}};
 }

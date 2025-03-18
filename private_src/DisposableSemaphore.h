@@ -14,7 +14,7 @@ namespace task
 		SemaphoreHandle_t _semaphore{};
 		std::atomic_bool _disposed = false;
 		int64_t _acquirer_count = 0;
-		std::shared_ptr<base::IMutex> _lock = base::di::CreateIMutex();
+		std::shared_ptr<base::IMutex> _lock = base::CreateIMutex();
 
 	public:
 		DisposableSemaphore(int32_t initial_count);
