@@ -1,12 +1,10 @@
 #include "base/task/delay.h"
-#include "base/string/define.h"
 #include "base/unit/Hz.h"
 #include "base/unit/Seconds.h"
 #include "bsp-interface/di/systick.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include <chrono>
-#include <stdexcept>
 
 void base::Delay(std::chrono::seconds const &time)
 {
@@ -56,5 +54,5 @@ void base::Delay(std::chrono::microseconds const &time)
 
 void base::Delay(std::chrono::nanoseconds const &time)
 {
-	throw std::runtime_error{CODE_POS_STR + "不支持纳秒级延时。"};
+	Delay(std::chrono::duration_cast<std::chrono::microseconds>(time));
 }
