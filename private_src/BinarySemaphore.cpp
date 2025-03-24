@@ -75,7 +75,7 @@ bool task::BinarySemaphore::TryAcquire(TickType_t ticks)
 	return xSemaphoreTake(handle, ticks) == pdTRUE;
 }
 
-std::shared_ptr<base::IBinarySemaphore> CreateIBinarySemaphore(bool initial_release)
+std::shared_ptr<base::IBinarySemaphore> base::CreateIBinarySemaphore(bool initial_release)
 {
 	return std::shared_ptr<base::IBinarySemaphore>{new ::task::BinarySemaphore{initial_release}};
 }
