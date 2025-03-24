@@ -3,12 +3,17 @@
 #include "base/unit/Hz.h"
 #include <stdexcept>
 
-task::BinarySemaphore::BinarySemaphore()
+task::BinarySemaphore::BinarySemaphore(bool initial_release)
 {
 	handle = xSemaphoreCreateBinary();
 	if (handle == nullptr)
 	{
 		throw std::runtime_error{"创建信号量失败"};
+	}
+
+	if (initial_release)
+	{
+		Release();
 	}
 }
 
@@ -68,4 +73,9 @@ bool task::BinarySemaphore::TryAcquire(base::Seconds const &timeout)
 bool task::BinarySemaphore::TryAcquire(TickType_t ticks)
 {
 	return xSemaphoreTake(handle, ticks) == pdTRUE;
+}
+
+std::shared_ptr<base::IBinarySemaphore> CreateIBinarySemaphore(bool initial_release)
+{
+	return std::shared_ptr<base::IBinarySemaphore>{new ::task::BinarySemaphore{initial_release}};
 }

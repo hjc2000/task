@@ -1,5 +1,5 @@
 #pragma once
-#include "bsp-interface/task/IBinarySemaphore.h"
+#include "base/task/IBinarySemaphore.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 
@@ -9,14 +9,15 @@ namespace task
 	/// @brief 包装 freertos 的二进制信号量。
 	///
 	class BinarySemaphore :
-		public bsp::IBinarySemaphore
+		public base::IBinarySemaphore
 	{
 	private:
 		SemaphoreHandle_t handle;
 		BaseType_t _higher_priority_task_woken = pdFALSE;
 
 	public:
-		BinarySemaphore();
+		BinarySemaphore(bool initial_release);
+
 		~BinarySemaphore();
 
 		///
