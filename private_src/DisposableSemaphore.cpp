@@ -66,6 +66,11 @@ void task::DisposableSemaphore::Acquire()
 
 bool task::DisposableSemaphore::TryAcquire(base::Seconds const &timeout)
 {
+	if (timeout < 0)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "超时时间不能 <=0."};
+	}
+
 	if (_disposed)
 	{
 		throw std::runtime_error{CODE_POS_STR + "信号量已经释放，无法获取。"};
