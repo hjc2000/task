@@ -37,3 +37,8 @@ void task::Mutex::Unlock()
 {
 	xSemaphoreGive(_freertos_mutex);
 }
+
+std::shared_ptr<base::IMutex> base::CreateIMutex()
+{
+	return std::shared_ptr<base::IMutex>{new task::Mutex{}};
+}

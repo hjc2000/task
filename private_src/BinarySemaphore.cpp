@@ -1,9 +1,9 @@
 #include "BinarySemaphore.h"
+#include "base/string/define.h"
 #include <base/unit/Hz.h>
+#include <stdexcept>
 
-using namespace task;
-
-BinarySemaphore::BinarySemaphore()
+task::BinarySemaphore::BinarySemaphore()
 {
 	handle = xSemaphoreCreateBinary();
 	if (handle == nullptr)
@@ -12,22 +12,22 @@ BinarySemaphore::BinarySemaphore()
 	}
 }
 
-BinarySemaphore::~BinarySemaphore()
+task::BinarySemaphore::~BinarySemaphore()
 {
 	vSemaphoreDelete(handle);
 }
 
-void BinarySemaphore::Release()
+void task::BinarySemaphore::Release()
 {
 	xSemaphoreGive(handle);
 }
 
-void BinarySemaphore::ReleaseFromISR()
+void task::BinarySemaphore::ReleaseFromISR()
 {
 	xSemaphoreGiveFromISR(handle, &_higher_priority_task_woken);
 }
 
-void BinarySemaphore::Acquire()
+void task::BinarySemaphore::Acquire()
 {
 	bool ret = xSemaphoreTake(handle, portMAX_DELAY);
 	if (!ret)
@@ -38,23 +38,14 @@ void BinarySemaphore::Acquire()
 
 bool task::BinarySemaphore::TryAcquire(base::Seconds const &timeout)
 {
-	base::Seconds tick_interval{base::Hz{configTICK_RATE_HZ}};
-	int64_t tick_count = static_cast<int64_t>(timeout / tick_interval);
-	if (tick_count <= 0)
+	if (timeout < 0)
 	{
-		// 无限等待获取信号量。
-		try
-		{
-			Acquire();
-			return true;
-		}
-		catch (...)
-		{
-			return false;
-		}
+		throw std::invalid_argument{CODE_POS_STR + "超时时间不能 <=0."};
 	}
 
-	// 有超时地等待信号量。
+	base::Seconds tick_interval{base::Hz{configTICK_RATE_HZ}};
+	int64_t tick_count = static_cast<int64_t>(timeout / tick_interval);
+
 	// 因为 freertos 不支持传入很大的整型超时时间，所以分成几次等待。
 	int64_t remain_tick_count = tick_count;
 	while (remain_tick_count > INT16_MAX)
@@ -74,7 +65,7 @@ bool task::BinarySemaphore::TryAcquire(base::Seconds const &timeout)
 	return TryAcquire(remain_tick_count);
 }
 
-bool BinarySemaphore::TryAcquire(TickType_t ticks)
+bool task::BinarySemaphore::TryAcquire(TickType_t ticks)
 {
 	return xSemaphoreTake(handle, ticks) == pdTRUE;
 }
