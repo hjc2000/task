@@ -1,6 +1,6 @@
 #include "BinarySemaphore.h"
 #include "base/string/define.h"
-#include <base/unit/Hz.h>
+#include "base/unit/Hz.h"
 #include <stdexcept>
 
 task::BinarySemaphore::BinarySemaphore()

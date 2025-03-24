@@ -1,9 +1,7 @@
-#include <base/define.h>
-#include <BinarySemaphore.h>
-#include <bsp-interface/di/interrupt.h>
-#include <bsp-interface/di/systick.h>
-#include <bsp-interface/di/task.h>
-#include <FreeTask.h>
+#include "BinarySemaphore.h"
+#include "bsp-interface/di/systick.h"
+#include "bsp-interface/di/task.h"
+#include "FreeTask.h"
 
 std::shared_ptr<bsp::IBinarySemaphore> bsp::di::task::CreateBinarySemaphore()
 {
