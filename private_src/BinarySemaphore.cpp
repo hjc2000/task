@@ -40,7 +40,7 @@ bool task::BinarySemaphore::TryAcquire(base::Seconds const &timeout)
 {
 	if (timeout < 0)
 	{
-		throw std::invalid_argument{CODE_POS_STR + "超时时间不能 <=0."};
+		throw std::invalid_argument{CODE_POS_STR + "超时时间不能 <= 0."};
 	}
 
 	base::Seconds tick_interval{base::Hz{configTICK_RATE_HZ}};
