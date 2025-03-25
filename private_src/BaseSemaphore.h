@@ -1,17 +1,16 @@
 #pragma once
-#include "base/task/ISemaphore.h"
+#include "base/task/IBaseSemaphore.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include <atomic>
 
 namespace task
 {
-	class DisposableSemaphore :
-		public base::ISemaphore
+	class BaseSemaphore :
+		public base::IBaseSemaphore
 	{
 	private:
 		SemaphoreHandle_t _semaphore{};
-		std::atomic_bool _disposed = false;
 		BaseType_t _higher_priority_task_woken = pdFALSE;
 
 	public:
@@ -21,11 +20,7 @@ namespace task
 		/// @param initial_count 初始计数。即构造后，
 		/// 	@note 不释放就能允许 initial_count 次获取操作不被阻塞。
 		///
-		DisposableSemaphore(int32_t initial_count);
-
-		~DisposableSemaphore();
-
-		virtual void Dispose() override;
+		BaseSemaphore(int32_t initial_count);
 
 		///
 		/// @brief 释放信号量。
