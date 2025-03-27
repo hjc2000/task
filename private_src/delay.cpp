@@ -6,12 +6,12 @@
 #include "task.h"
 #include <chrono>
 
-void base::Delay(std::chrono::seconds const &time)
+void base::task::Delay(std::chrono::seconds const &time)
 {
 	Delay(std::chrono::milliseconds{time});
 }
 
-void base::Delay(std::chrono::milliseconds const &time)
+void base::task::Delay(std::chrono::milliseconds const &time)
 {
 	// 如果调度器不在运行，则使用 SysTickClock::Delay
 	if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING)
@@ -38,7 +38,7 @@ void base::Delay(std::chrono::milliseconds const &time)
 	}
 }
 
-void base::Delay(std::chrono::microseconds const &time)
+void base::task::Delay(std::chrono::microseconds const &time)
 {
 	// 大于 1000 的微秒转换为毫秒，利用 Delay(std::chrono::milliseconds milliseconds) 重载。
 	std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(time);
@@ -52,7 +52,7 @@ void base::Delay(std::chrono::microseconds const &time)
 	DI_SysTick().Delay(remain);
 }
 
-void base::Delay(std::chrono::nanoseconds const &time)
+void base::task::Delay(std::chrono::nanoseconds const &time)
 {
 	Delay(std::chrono::duration_cast<std::chrono::microseconds>(time));
 }
