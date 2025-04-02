@@ -32,7 +32,7 @@ void base::task::Delay(std::chrono::milliseconds const &time)
 
 	// 剩下的需要延时的时间小于 freertos 的滴答周期，无法用 freertos 延时
 	base::Seconds remain = period - freertos_tick_interval * tick_count;
-	if (remain > 0)
+	if (remain > base::Seconds{0})
 	{
 		DI_SysTick().Delay(static_cast<std::chrono::milliseconds>(remain));
 	}
