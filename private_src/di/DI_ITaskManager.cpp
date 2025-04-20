@@ -1,4 +1,3 @@
-#include "BinarySemaphore.h"
 #include "bsp-interface/di/systick.h"
 #include "bsp-interface/di/task.h"
 #include "FreeTask.h"
