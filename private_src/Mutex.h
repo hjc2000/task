@@ -1,23 +1,51 @@
 #pragma once
-#include <base/task/IMutex.h>
-#include <FreeRTOS.h>
-#include <semphr.h>
+#include "base/string/define.h"
+#include "base/task/mutex_handle.h"
+#include "FreeRTOS.h"
+#include "semphr.h"
 #include <stdexcept>
 
-namespace task
+class base::task::mutex_handle
 {
-	class Mutex :
-		public base::IMutex
+private:
+	SemaphoreHandle_t _freertos_mutex;
+
+public:
+	mutex_handle()
 	{
-	private:
-		SemaphoreHandle_t _freertos_mutex;
+		_freertos_mutex = xSemaphoreCreateMutex();
+		if (_freertos_mutex == nullptr)
+		{
+			throw std::runtime_error{CODE_POS_STR + "Mutex 构造失败"};
+		}
+	}
 
-	public:
-		Mutex();
-		~Mutex();
+	~mutex_handle()
+	{
+		if (_freertos_mutex == nullptr)
+		{
+			return;
+		}
 
-		void Lock() override;
-		void Unlock() override;
-	};
+		Unlock();
+		vSemaphoreDelete(_freertos_mutex);
+	}
 
-} // namespace task
+	void Lock()
+	{
+		while (true)
+		{
+			TickType_t waitTime = portMAX_DELAY;
+			bool result = xSemaphoreTake(_freertos_mutex, waitTime) == pdTRUE;
+			if (result)
+			{
+				return;
+			}
+		}
+	}
+
+	void Unlock()
+	{
+		xSemaphoreGive(_freertos_mutex);
+	}
+};

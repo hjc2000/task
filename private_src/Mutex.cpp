@@ -1,44 +1,16 @@
 #include "Mutex.h"
 
-task::Mutex::Mutex()
+std::shared_ptr<base::task::mutex_handle> base::task::create_mutex()
 {
-	_freertos_mutex = xSemaphoreCreateMutex();
-	if (_freertos_mutex == nullptr)
-	{
-		throw std::runtime_error{"Mutex 构造失败"};
-	}
+	return std::shared_ptr<base::task::mutex_handle>{new base::task::mutex_handle{}};
 }
 
-task::Mutex::~Mutex()
+void base::task::lock(base::task::mutex_handle &h)
 {
-	if (_freertos_mutex == nullptr)
-	{
-		return;
-	}
-
-	Unlock();
-	vSemaphoreDelete(_freertos_mutex);
+	h.Lock();
 }
 
-void task::Mutex::Lock()
+void base::task::unlock(base::task::mutex_handle &h)
 {
-	while (true)
-	{
-		TickType_t waitTime = portMAX_DELAY;
-		bool result = xSemaphoreTake(_freertos_mutex, waitTime) == pdTRUE;
-		if (result)
-		{
-			return;
-		}
-	}
-}
-
-void task::Mutex::Unlock()
-{
-	xSemaphoreGive(_freertos_mutex);
-}
-
-std::shared_ptr<base::IMutex> base::CreateIMutex()
-{
-	return std::shared_ptr<base::IMutex>{new task::Mutex{}};
+	h.Unlock();
 }
