@@ -16,7 +16,7 @@ namespace
 	/// @brief 默认的任务栈大小。
 	///
 	///
-	size_t _default_stack_size = 1024 * 4;
+	size_t _default_stack_size = 1024 * 8;
 
 	///
 	/// @brief 默认的任务优先级。
