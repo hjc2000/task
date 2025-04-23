@@ -241,3 +241,11 @@ void base::task::resume_all_task_scheduler()
 }
 
 /* #endregion */
+
+extern "C"
+{
+	void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
+	{
+		base::console.WriteErrorLine(std::string{"任务栈发生溢出。，任务名："} + pcTaskName);
+	}
+}
