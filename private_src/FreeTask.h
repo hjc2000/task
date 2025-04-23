@@ -1,12 +1,12 @@
 #pragma once
-#include <base/define.h>
-#include <bsp-interface/task/ITask.h>
-#include <FreeRTOS.h>
+#include "base/define.h"
+#include "bsp-interface/task/ITask.h"
+#include "FreeRTOS.h"
+#include "task.h"
 #include <functional>
 #include <map>
 #include <memory>
 #include <stdint.h>
-#include <task.h>
 
 namespace task
 {
