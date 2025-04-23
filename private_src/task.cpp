@@ -1,5 +1,6 @@
 #include "base/task/task.h"
 #include "base/Console.h"
+#include "base/string/define.h"
 #include "base/task/TaskCompletionSignal.h"
 #include "bsp-interface/di/systick.h"
 #include "FreeRTOS.h" // IWYU pragma: keep
@@ -141,6 +142,11 @@ std::shared_ptr<base::TaskCompletionSignal> base::task::run(std::string const &t
 															size_t stack_size,
 															std::function<void()> const &func)
 {
+	if (func == nullptr)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "func 不能为 nullptr"};
+	}
+
 	TaskContext *context = new TaskContext{};
 	context->func = func;
 
