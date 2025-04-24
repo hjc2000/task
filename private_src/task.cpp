@@ -1,6 +1,6 @@
 #include "base/task/task.h"
 #include "base/Console.h"
-#include "base/peripheral/systick/systick.h"
+#include "base/embedded/systick/systick.h"
 #include "base/string/define.h"
 #include "base/task/TaskCompletionSignal.h"
 #include "FreeRTOS.h" // IWYU pragma: keep

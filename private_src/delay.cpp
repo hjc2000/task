@@ -1,5 +1,5 @@
 #include "base/task/delay.h"
-#include "base/peripheral/systick/systick.h"
+#include "base/embedded/systick/systick.h"
 #include "base/unit/Hz.h"
 #include "base/unit/Seconds.h"
 #include "FreeRTOS.h"
