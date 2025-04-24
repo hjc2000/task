@@ -1,7 +1,7 @@
 #include "base/task/delay.h"
+#include "base/peripheral/systick/systick.h"
 #include "base/unit/Hz.h"
 #include "base/unit/Seconds.h"
-#include "bsp-interface/di/systick.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include <chrono>
@@ -16,7 +16,7 @@ void base::task::Delay(std::chrono::milliseconds const &time)
 	// 如果调度器不在运行，则使用 SysTickClock::Delay
 	if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING)
 	{
-		DI_SysTick().Delay(time);
+		base::systick::delay(time);
 		return;
 	}
 
@@ -34,7 +34,7 @@ void base::task::Delay(std::chrono::milliseconds const &time)
 	base::Seconds remain = period - freertos_tick_interval * tick_count;
 	if (remain > base::Seconds{0})
 	{
-		DI_SysTick().Delay(static_cast<std::chrono::milliseconds>(remain));
+		base::systick::delay(static_cast<std::chrono::milliseconds>(remain));
 	}
 }
 
@@ -49,7 +49,7 @@ void base::task::Delay(std::chrono::microseconds const &time)
 
 	// 剩余的小于 1000 部分的微秒
 	std::chrono::microseconds remain = time - ms;
-	DI_SysTick().Delay(remain);
+	base::systick::delay(remain);
 }
 
 void base::task::Delay(std::chrono::nanoseconds const &time)

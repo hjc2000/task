@@ -1,8 +1,8 @@
 #include "base/task/task.h"
 #include "base/Console.h"
+#include "base/peripheral/systick/systick.h"
 #include "base/string/define.h"
 #include "base/task/TaskCompletionSignal.h"
-#include "bsp-interface/di/systick.h"
 #include "FreeRTOS.h" // IWYU pragma: keep
 #include "task.h"
 #include <cmath>
@@ -200,7 +200,7 @@ void base::task::start_scheduler()
 	// 启动调度前需要设置回调函数，这个回调函数由 SysTick 定时时间到中断触发，
 	// 在这里面定期调用 xPortSysTickHandler，它是 freertos 时间的来源，没有它，
 	// freertos 的与时间相关的功能都不能工作。
-	DI_SysTick().SetElapsedHandler(
+	base::systick::set_elapsed_handler(
 		[]()
 		{
 			if (base::task::scheduler_has_started())
