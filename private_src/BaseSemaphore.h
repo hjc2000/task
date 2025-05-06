@@ -1,8 +1,7 @@
 #pragma once
 #include "base/task/IBaseSemaphore.h"
-#include "FreeRTOS.h"
+#include "FreeRTOS.h" // IWYU pragma: keep
 #include "semphr.h"
-#include <atomic>
 
 namespace task
 {

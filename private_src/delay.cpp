@@ -2,7 +2,7 @@
 #include "base/embedded/systick/systick.h"
 #include "base/unit/Hz.h"
 #include "base/unit/Seconds.h"
-#include "FreeRTOS.h"
+#include "FreeRTOS.h" // IWYU pragma: keep
 #include "task.h"
 #include <chrono>
 
