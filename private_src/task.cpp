@@ -2,6 +2,7 @@
 #include "base/Console.h"
 #include "base/embedded/systick/systick.h"
 #include "base/string/define.h"
+#include "base/task/ITask.h"
 #include "base/task/TaskCompletionSignal.h"
 #include "FreeRTOS.h" // IWYU pragma: keep
 #include "task.h"
@@ -92,7 +93,7 @@ void base::task::set_default_priority(uint32_t value)
 ///
 /// @return
 ///
-std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(std::function<void()> const &func)
+std::shared_ptr<base::task::ITask> base::task::run(std::function<void()> const &func)
 {
 	return base::task::run("",
 						   _default_priority,
@@ -110,8 +111,8 @@ std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(std::function<
 ///
 /// @return
 ///
-std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(size_t stack_size,
-																  std::function<void()> const &func)
+std::shared_ptr<base::task::ITask> base::task::run(size_t stack_size,
+												   std::function<void()> const &func)
 {
 	return base::task::run("",
 						   _default_priority,
@@ -127,9 +128,9 @@ std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(size_t stack_s
 /// @param func 任务函数。
 /// @return
 ///
-std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(uint32_t priority,
-																  size_t stack_size,
-																  std::function<void()> const &func)
+std::shared_ptr<base::task::ITask> base::task::run(uint32_t priority,
+												   size_t stack_size,
+												   std::function<void()> const &func)
 {
 	return base::task::run("",
 						   priority,
@@ -137,10 +138,10 @@ std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(uint32_t prior
 						   func);
 }
 
-std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(std::string const &task_name,
-																  uint32_t priority,
-																  size_t stack_size,
-																  std::function<void()> const &func)
+std::shared_ptr<base::task::ITask> base::task::run(std::string const &task_name,
+												   uint32_t priority,
+												   size_t stack_size,
+												   std::function<void()> const &func)
 {
 	if (func == nullptr)
 	{
