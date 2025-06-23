@@ -28,7 +28,7 @@ namespace
 	{
 		TaskHandle_t handle{};
 		std::function<void()> func{};
-		std::shared_ptr<base::TaskCompletionSignal> task_completion_signal{new base::TaskCompletionSignal{false}};
+		std::shared_ptr<base::task::TaskCompletionSignal> task_completion_signal{new base::task::TaskCompletionSignal{false}};
 	};
 
 } // namespace
@@ -92,7 +92,7 @@ void base::task::set_default_priority(uint32_t value)
 ///
 /// @return
 ///
-std::shared_ptr<base::TaskCompletionSignal> base::task::run(std::function<void()> const &func)
+std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(std::function<void()> const &func)
 {
 	return base::task::run("",
 						   _default_priority,
@@ -110,8 +110,8 @@ std::shared_ptr<base::TaskCompletionSignal> base::task::run(std::function<void()
 ///
 /// @return
 ///
-std::shared_ptr<base::TaskCompletionSignal> base::task::run(size_t stack_size,
-															std::function<void()> const &func)
+std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(size_t stack_size,
+																  std::function<void()> const &func)
 {
 	return base::task::run("",
 						   _default_priority,
@@ -127,9 +127,9 @@ std::shared_ptr<base::TaskCompletionSignal> base::task::run(size_t stack_size,
 /// @param func 任务函数。
 /// @return
 ///
-std::shared_ptr<base::TaskCompletionSignal> base::task::run(uint32_t priority,
-															size_t stack_size,
-															std::function<void()> const &func)
+std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(uint32_t priority,
+																  size_t stack_size,
+																  std::function<void()> const &func)
 {
 	return base::task::run("",
 						   priority,
@@ -137,10 +137,10 @@ std::shared_ptr<base::TaskCompletionSignal> base::task::run(uint32_t priority,
 						   func);
 }
 
-std::shared_ptr<base::TaskCompletionSignal> base::task::run(std::string const &task_name,
-															uint32_t priority,
-															size_t stack_size,
-															std::function<void()> const &func)
+std::shared_ptr<base::task::TaskCompletionSignal> base::task::run(std::string const &task_name,
+																  uint32_t priority,
+																  size_t stack_size,
+																  std::function<void()> const &func)
 {
 	if (func == nullptr)
 	{
