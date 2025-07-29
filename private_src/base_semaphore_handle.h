@@ -77,14 +77,14 @@ public:
 	/// @return true
 	/// @return false
 	///
-	bool TryAcquire(base::Seconds const &timeout)
+	bool TryAcquire(base::unit::Seconds const &timeout)
 	{
-		if (timeout < base::Seconds{0})
+		if (timeout < base::unit::Seconds{0})
 		{
 			throw std::invalid_argument{CODE_POS_STR + "超时时间不能 <= 0."};
 		}
 
-		base::Seconds freertos_tick_interval{base::Hz{configTICK_RATE_HZ}};
+		base::unit::Seconds freertos_tick_interval{base::unit::Hz{configTICK_RATE_HZ}};
 		int64_t tick_count = static_cast<int64_t>(timeout / freertos_tick_interval);
 		if (tick_count >= static_cast<int64_t>(portMAX_DELAY))
 		{

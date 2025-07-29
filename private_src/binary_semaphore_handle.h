@@ -70,14 +70,14 @@ public:
 	/// @param timeout 超时时间。
 	/// @return
 	///
-	bool TryAcquire(base::Seconds const &timeout)
+	bool TryAcquire(base::unit::Seconds const &timeout)
 	{
-		if (timeout < base::Seconds{0})
+		if (timeout < base::unit::Seconds{0})
 		{
 			throw std::invalid_argument{CODE_POS_STR + "超时时间不能 <= 0."};
 		}
 
-		base::Seconds tick_interval{base::Hz{configTICK_RATE_HZ}};
+		base::unit::Seconds tick_interval{base::unit::Hz{configTICK_RATE_HZ}};
 		int64_t tick_count = static_cast<int64_t>(timeout / tick_interval);
 
 		// 因为 freertos 不支持传入很大的整型超时时间，所以分成几次等待。
