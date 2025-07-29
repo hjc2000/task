@@ -20,7 +20,7 @@ void base::task::acquire(base::task::binary_semaphore_handle &h)
 	h.Acquire();
 }
 
-bool base::task::try_acquire(base::task::binary_semaphore_handle &h, base::unit::Seconds const &timeout)
+bool base::task::try_acquire(base::task::binary_semaphore_handle &h, base::unit::Second const &timeout)
 {
 	return h.TryAcquire(timeout);
 }

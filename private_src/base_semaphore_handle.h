@@ -2,7 +2,7 @@
 #include "base/string/define.h"
 #include "base/task/base_semaphore_handle.h"
 #include "base/unit/Hz.h"
-#include "base/unit/Seconds.h"
+#include "base/unit/Second.h"
 #include "FreeRTOS.h" // IWYU pragma: keep
 #include "semphr.h"
 
@@ -77,14 +77,14 @@ public:
 	/// @return true
 	/// @return false
 	///
-	bool TryAcquire(base::unit::Seconds const &timeout)
+	bool TryAcquire(base::unit::Second const &timeout)
 	{
-		if (timeout < base::unit::Seconds{0})
+		if (timeout < base::unit::Second{0})
 		{
 			throw std::invalid_argument{CODE_POS_STR + "超时时间不能 <= 0."};
 		}
 
-		base::unit::Seconds freertos_tick_interval{base::unit::Hz{configTICK_RATE_HZ}};
+		base::unit::Second freertos_tick_interval{base::unit::Hz{configTICK_RATE_HZ}};
 		int64_t tick_count = static_cast<int64_t>(timeout / freertos_tick_interval);
 		if (tick_count >= static_cast<int64_t>(portMAX_DELAY))
 		{

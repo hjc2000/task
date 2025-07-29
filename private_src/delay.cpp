@@ -1,7 +1,7 @@
 #include "base/task/delay.h"
 #include "base/embedded/systick/systick.h"
 #include "base/unit/Hz.h"
-#include "base/unit/Seconds.h"
+#include "base/unit/Second.h"
 #include "FreeRTOS.h" // IWYU pragma: keep
 #include "task.h"
 #include <chrono>
@@ -20,8 +20,8 @@ void base::task::Delay(std::chrono::milliseconds const &time)
 		return;
 	}
 
-	base::unit::Seconds freertos_tick_interval{base::unit::Hz{configTICK_RATE_HZ}};
-	base::unit::Seconds period{time};
+	base::unit::Second freertos_tick_interval{base::unit::Hz{configTICK_RATE_HZ}};
+	base::unit::Second period{time};
 
 	// 先让 freertos 把整数个滴答延时完毕
 	int64_t tick_count = static_cast<int64_t>(period / freertos_tick_interval);
@@ -31,8 +31,8 @@ void base::task::Delay(std::chrono::milliseconds const &time)
 	}
 
 	// 剩下的需要延时的时间小于 freertos 的滴答周期，无法用 freertos 延时
-	base::unit::Seconds remain = period - freertos_tick_interval * tick_count;
-	if (remain > base::unit::Seconds{0})
+	base::unit::Second remain = period - freertos_tick_interval * tick_count;
+	if (remain > base::unit::Second{0})
 	{
 		base::systick::delay(static_cast<std::chrono::milliseconds>(remain));
 	}
